@@ -55,16 +55,42 @@ export const credentials = [
   "Registered with IAP & Maharashtra Council for Physiotherapists",
 ];
 
-
-
-
 export const treatments = [
-  { anim: "spine" as const, title: "Back pain & sciatica", text: "Acute and chronic low back pain, disc-related pain and radiating leg pain." },
-  { anim: "neck" as const, title: "Neck pain", text: "Stiffness, cervical pain, headaches of neck origin and arm symptoms." },
-  { anim: "joint" as const, title: "Joints & extremities", text: "Shoulder, knee, hip, elbow and ankle problems of muscles and joints." },
-  { anim: "ecg" as const, title: "Post-surgical rehabilitation", text: "Stabilisation and recovery programmes after orthopaedic surgery." },
-  { anim: "neuron" as const, title: "Stroke rehabilitation", text: "Neuro-developmental techniques to rebuild movement and function." },
-  { anim: "vestibular" as const, title: "Vestibular rehabilitation", text: "Treatment for dizziness, vertigo and inner-ear balance problems." },
+  {
+    id: "back", anim: "spine" as const, area: "Lower back", spot: { x: 100, y: 184 },
+    title: "Back pain & sciatica",
+    text: "Acute and chronic low back pain, disc-related pain and pain radiating into the leg.",
+    tags: ["Low back pain", "Sciatica", "Disc-related pain", "Stiffness"],
+  },
+  {
+    id: "neck", anim: "neck" as const, area: "Neck", spot: { x: 100, y: 76 },
+    title: "Neck pain",
+    text: "Stiffness, cervical pain, headaches that start in the neck, and arm symptoms.",
+    tags: ["Stiff neck", "Cervical pain", "Neck-related headaches", "Arm symptoms"],
+  },
+  {
+    id: "joints", anim: "joint" as const, area: "Shoulder", spot: { x: 60, y: 108 },
+    title: "Joints & extremities",
+    text: "Problems of the muscles and joints of the shoulder, elbow, hip, knee and ankle.",
+    tags: ["Shoulder", "Elbow", "Hip", "Knee", "Ankle"],
+  },
+  {
+    id: "surgery", anim: "ecg" as const, area: "Knee", spot: { x: 78, y: 318 },
+    title: "Post-surgical rehabilitation",
+    text: "Stabilisation and structured recovery programmes after orthopaedic surgery.",
+    tags: ["After joint surgery", "After spine surgery", "Strength & stability"],
+  },
+  {
+    id: "stroke", anim: "neuron" as const, area: "Brain", spot: { x: 100, y: 30 },
+    title: "Stroke rehabilitation",
+    text: "Neuro-developmental techniques to help rebuild movement, balance and everyday function.",
+    tags: ["Movement", "Balance", "Everyday function"],
+  },
+  {
+    id: "vestibular", anim: "vestibular" as const, area: "Inner ear", spot: { x: 121, y: 44 },
+    title: "Vestibular rehabilitation",
+    text: "Treatment for dizziness, vertigo and balance problems linked to the inner ear.",
+    tags: ["Dizziness", "Vertigo", "Balance problems"],
+  },
 ];
-
 

@@ -1,55 +1,76 @@
 import Image from "next/image";
 import { Header } from "./components/Header";
-import { TreatCard } from "./components/TreatCard";
+import { Reveal } from "./components/Reveal";
+import { TreatmentsExplorer } from "./components/TreatmentsExplorer";
 import { VideoEmbed } from "./components/VideoEmbed";
 import { Logo } from "./components/Logo";
 import { Arrow, Check, Clock, Mail, Phone, Pin, Shield } from "./components/Icons";
-import { credentials, nav, site, stats, treatments, video } from "@/lib/site";
+import { credentials, nav, site, stats, video } from "@/lib/site";
 
+const base = process.env.NEXT_PUBLIC_BASE_PATH;
+const tel = `tel:${site.phone.replace(/\s/g, "")}`;
+const delay = (ms: number) => ({ "--d": `${ms}ms` }) as React.CSSProperties;
+
+function Kicker({ n, children }: { n: string; children: React.ReactNode }) {
+  return (
+    <span className="kicker">
+      <span className="kicker-num">{n}</span>
+      <span className="kicker-line" aria-hidden="true" />
+      {children}
+    </span>
+  );
+}
 
 export default function Home() {
   return (
     <>
       <Header />
+      <Reveal />
       <main id="top">
         {/* HERO */}
         <section className="hero">
           <div className="container hero-grid">
             <div className="hero-copy">
-              <span className="eyebrow"><Shield /> {site.tagline}</span>
-              <h1>
+              <span className="eyebrow" data-reveal><Shield /> {site.tagline}</span>
+              <h1 data-reveal style={delay(80)}>
                 Lasting relief from back, neck &amp; joint pain — <em>without surgery.</em>
               </h1>
-              <p className="lead">
+              <p className="lead" data-reveal style={delay(160)}>
                 A non-surgical super-specialisation centre led by {site.doctorTitle}, a Diplomated
                 McKenzie Clinician with over three decades of clinical practice in Mumbai.
               </p>
-              <div className="hero-actions">
+              <div className="hero-actions" data-reveal style={delay(240)}>
                 <a href="#contact" className="btn btn-primary">Get in touch <Arrow /></a>
-                <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="btn btn-ghost"><Phone /> Call the clinic</a>
+                <a href={tel} className="btn btn-ghost"><Phone /> Call the clinic</a>
               </div>
-              <ul className="hero-points">
+              <ul className="hero-points" data-reveal style={delay(320)}>
                 <li><Check /> Accredited by McKenzie Institute International, NZ</li>
                 <li><Check /> Many patients respond within the first visit</li>
               </ul>
             </div>
 
-            <div className="hero-card">
-              <div className="portrait">
-                {/* Replace with <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH}/dr-asha.jpg`} …/> once a photo is available */}
-                <div className="portrait-mark"><Logo size={64} /></div>
-                <div className="portrait-tag">
+            <div className="hero-visual" data-reveal style={delay(200)}>
+              <div className="hero-photo">
+                <Image
+                  src={`${base}/dr-asha-hero.jpg`}
+                  alt="Dr. Asha Menon"
+                  width={1160}
+                  height={1080}
+                  priority
+                  sizes="(max-width: 1000px) 92vw, 520px"
+                />
+                <div className="hero-name">
                   <strong>{site.doctor}</strong>
                   <span>P.T., Dip. MDT · Founder Director, McKenzie Institute India</span>
                 </div>
               </div>
-              <div className="stats">
-                {stats.map((s) => (
-                  <div key={s.label}>
-                    <strong>{s.value}</strong>
-                    <span>{s.label}</span>
-                  </div>
-                ))}
+              <div className="float-chip chip-a">
+                <strong>{stats[0].value}</strong>
+                <span>{stats[0].label}</span>
+              </div>
+              <div className="float-chip chip-b">
+                <strong>{stats[1].value}</strong>
+                <span>{stats[1].label}</span>
               </div>
             </div>
           </div>
@@ -58,9 +79,9 @@ export default function Home() {
         {/* ABOUT */}
         <section id="about" className="section">
           <div className="container about-grid">
-            <figure className="about-photo">
+            <figure className="about-photo" data-reveal>
               <Image
-                src={`${process.env.NEXT_PUBLIC_BASE_PATH}/dr-asha.jpg`}
+                src={`${base}/dr-asha.jpg`}
                 alt="Dr. Asha Menon, McKenzie physiotherapist"
                 width={960}
                 height={1200}
@@ -71,8 +92,8 @@ export default function Home() {
                 <span>in private practice</span>
               </figcaption>
             </figure>
-            <div className="about-copy">
-              <span className="kicker">About the doctor</span>
+            <div className="about-copy" data-reveal style={delay(120)}>
+              <Kicker n="01">About the doctor</Kicker>
               <h2>Dr. Asha Menon <span className="nowrap">(P.T.), Dip. MDT</span></h2>
               <p className="lead-sm">
                 Dr. Asha Menon specialises in assessing and treating conditions of the muscles, neural
@@ -96,27 +117,27 @@ export default function Home() {
         {/* VIDEO */}
         <section id="video" className="section section-video">
           <div className="container video-wrap">
-            <div className="section-head center">
-              <span className="kicker">{video.kicker}</span>
+            <div className="section-head center" data-reveal>
+              <Kicker n="02">{video.kicker}</Kicker>
               <h2>{video.title}</h2>
               <p>{video.text}</p>
             </div>
-            <VideoEmbed id={video.youtubeId} title={video.title} />
+            <div data-reveal style={delay(120)}>
+              <VideoEmbed id={video.youtubeId} title={video.title} />
+            </div>
           </div>
         </section>
 
         {/* TREATMENTS */}
         <section id="treatments" className="section section-tint">
           <div className="container">
-            <div className="section-head">
-              <span className="kicker">What we treat</span>
+            <div className="section-head" data-reveal>
+              <Kicker n="03">What we treat</Kicker>
               <h2>Conditions &amp; rehabilitation</h2>
-              <p>Non-surgical care for the spine and joints, plus specialised rehabilitation.</p>
+              <p>Non-surgical care for the spine and joints, plus specialised rehabilitation. Explore by area of the body.</p>
             </div>
-            <div className="grid-4">
-              {treatments.map((t) => (
-                <TreatCard key={t.title} title={t.title} text={t.text} anim={t.anim} />
-              ))}
+            <div data-reveal style={delay(120)}>
+              <TreatmentsExplorer />
             </div>
           </div>
         </section>
@@ -124,22 +145,22 @@ export default function Home() {
         {/* CONTACT */}
         <section id="contact" className="section">
           <div className="container">
-            <div className="contact-head">
+            <div className="contact-head" data-reveal>
               <div>
-                <span className="kicker">Contact</span>
+                <Kicker n="04">Contact</Kicker>
                 <h2>Visit the clinic</h2>
                 <p>Call or email to speak with the clinic.</p>
               </div>
               <div className="contact-list">
-                <a href={`tel:${site.phone.replace(/\s/g, "")}`}><Phone /> {site.phone}</a>
+                <a href={tel}><Phone /> {site.phone}</a>
                 <a href={`mailto:${site.email}`}><Mail /> {site.email}</a>
               </div>
             </div>
             <div className="locations">
-              {site.locations.map((l) => {
+              {site.locations.map((l, i) => {
                 const q = encodeURIComponent(l.mapQuery);
                 return (
-                  <div key={l.name} className="location">
+                  <div key={l.name} className="location" data-reveal style={delay(i * 120)}>
                     <div className="map">
                       <iframe
                         title={`Map: ${l.name}`}
@@ -166,6 +187,17 @@ export default function Home() {
                 );
               })}
             </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="cta-band">
+          <div className="container cta-inner" data-reveal>
+            <div>
+              <h2>Ready to move without pain?</h2>
+              <p>Start with a proper McKenzie assessment.</p>
+            </div>
+            <a href={tel} className="btn btn-light"><Phone /> Call the clinic</a>
           </div>
         </section>
       </main>
