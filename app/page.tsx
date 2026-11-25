@@ -143,7 +143,7 @@ export default function Home() {
                     <div className="map">
                       <iframe
                         title={`Map: ${l.name}`}
-                        src={`https://maps.google.com/maps?q=${q}&z=15&output=embed`}
+                        src={`https://maps.google.com/maps?q=${q}&z=17&output=embed`}
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"
                         allowFullScreen
