@@ -49,30 +49,14 @@ export default function Home() {
               </ul>
             </div>
 
-            <div className="hero-visual" data-reveal style={delay(200)}>
-              <div className="hero-photo">
-                <Image
-                  src={`${base}/dr-asha-hero.jpg`}
-                  alt="Dr. Asha Menon"
-                  width={1160}
-                  height={1080}
-                  priority
-                  sizes="(max-width: 1000px) 92vw, 520px"
-                />
-                <div className="hero-name">
-                  <strong>{site.doctor}</strong>
-                  <span>P.T., Dip. MDT · Founder Director, McKenzie Institute India</span>
-                </div>
-              </div>
-              <div className="float-chip chip-a">
-                <strong>{stats[0].value}</strong>
-                <span>{stats[0].label}</span>
-              </div>
-              <div className="float-chip chip-b">
-                <strong>{stats[1].value}</strong>
-                <span>{stats[1].label}</span>
-              </div>
-            </div>
+            <ul className="hero-stats" data-reveal style={delay(200)}>
+              {stats.map((st) => (
+                <li key={st.label}>
+                  <strong>{st.value}</strong>
+                  <span>{st.label}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
