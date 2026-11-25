@@ -6,6 +6,16 @@ import { treatments } from "@/lib/site";
 type Id = (typeof treatments)[number]["id"];
 const idx = (id: Id) => treatments.findIndex((t) => t.id === id);
 
+// Label positions (viewBox units). Left labels sit clear of the raised-arm sweep.
+const LABELS: { id: Id; side: "L" | "R"; y: number; bend: number; w: number }[] = [
+  { id: "stroke", side: "R", y: 14, bend: 140, w: 54 },
+  { id: "vestibular", side: "R", y: 48, bend: 150, w: 72 },
+  { id: "neck", side: "R", y: 84, bend: 150, w: 50 },
+  { id: "back", side: "R", y: 184, bend: 160, w: 82 },
+  { id: "joints", side: "L", y: 140, bend: 30, w: 70 },
+  { id: "surgery", side: "L", y: 318, bend: 40, w: 50 },
+];
+
 /** Two-layer rounded "capsule" limb: outline + fill, so it can be highlighted and rotated. */
 function Cap({ d, w, part }: { d: string; w: number; part: string }) {
   return (
@@ -28,6 +38,7 @@ export function BodyFigure({ active, onSelect }: { active: number; onSelect: (i:
   const mode = treatments[active].id;
 
   const move = (e: React.PointerEvent) => {
+    if (e.pointerType !== "mouse") return;
     const r = wrap.current?.getBoundingClientRect();
     if (!r) return;
     const px = (e.clientX - r.left) / r.width - 0.5;
@@ -41,8 +52,12 @@ export function BodyFigure({ active, onSelect }: { active: number; onSelect: (i:
     const i = idx(id);
     return {
       "data-hit": id,
-      onClick: () => onSelect(i),
+      onPointerUp: (e: React.PointerEvent) => {
+        e.stopPropagation();
+        onSelect(i);
+      },
       onPointerEnter: (e: React.PointerEvent) => {
+        if (e.pointerType !== "mouse") return;
         const r = wrap.current!.getBoundingClientRect();
         setTip({ x: e.clientX - r.left, y: e.clientY - r.top, i });
       },
@@ -50,12 +65,13 @@ export function BodyFigure({ active, onSelect }: { active: number; onSelect: (i:
     };
   };
 
-  const Spot = ({ id }: { id: Id }) => {
+  const spot = (id: Id) => {
     const i = idx(id);
     const t = treatments[i];
     const on = i === active;
     return (
       <g
+        key={`spot-${id}`}
         className={`spot ${on ? "is-on" : ""}`}
         transform={`translate(${t.spot.x} ${t.spot.y})`}
         role="button"
@@ -108,6 +124,26 @@ export function BodyFigure({ active, onSelect }: { active: number; onSelect: (i:
 
         <ellipse cx="100" cy="410" rx="46" ry="6" className="floor-shadow" />
 
+        {/* always-visible labels */}
+        <g className="labels">
+          {LABELS.map((l) => {
+            const i = idx(l.id);
+            const t = treatments[i];
+            const on = i === active;
+            const w = l.w;
+            const x = l.side === "L" ? -48 : 248 - w;
+            const edge = l.side === "L" ? x + w : x;
+            return (
+              <g key={l.id} className={`label ${on ? "is-on" : ""}`} {...hit(l.id)}>
+                <path className="leader" d={`M${edge} ${l.y} L${l.bend} ${l.y} L${t.spot.x} ${t.spot.y}`} />
+                <rect x={x} y={l.y - 10} width={w} height="20" rx="10" />
+                <text x={x + w / 2} y={l.y + 4} textAnchor="middle">{t.area}</text>
+              </g>
+            );
+          })}
+        </g>
+
+
         <g className="g-sway">
           {/* legs (behind torso) */}
           <g className="g-legL">
@@ -120,7 +156,7 @@ export function BodyFigure({ active, onSelect }: { active: number; onSelect: (i:
             <g className="g-shinR">
               <Cap d="M80 320 L78 394" w={16} part="part-legR" />
               <Cap d="M78 400 L66 402" w={10} part="part-legR" />
-              <Spot id="surgery" />
+              {spot("surgery")}
             </g>
           </g>
 
@@ -139,7 +175,7 @@ export function BodyFigure({ active, onSelect }: { active: number; onSelect: (i:
                 <Cap d="M52 158 L46 216" w={12} part="part-armR" />
                 <circle cx="45" cy="226" r="7" className="cap-hand part-armR" />
               </g>
-              <Spot id="joints" />
+              {spot("joints")}
             </g>
 
             <g className="part-torso" {...hit("back")}>
@@ -152,7 +188,7 @@ export function BodyFigure({ active, onSelect }: { active: number; onSelect: (i:
                   <rect key={y} x={96.5} y={y} width="7" height="8.5" rx="3" style={{ "--k": k } as React.CSSProperties} />
                 ))}
               </g>
-              <Spot id="back" />
+              {spot("back")}
             </g>
 
             <g className="g-head">
@@ -168,9 +204,9 @@ export function BodyFigure({ active, onSelect }: { active: number; onSelect: (i:
                 <circle r="6" />
                 <circle r="6" />
               </g>
-              <Spot id="stroke" />
-              <Spot id="vestibular" />
-              <Spot id="neck" />
+              {spot("stroke")}
+              {spot("vestibular")}
+              {spot("neck")}
             </g>
           </g>
         </g>
@@ -182,7 +218,7 @@ export function BodyFigure({ active, onSelect }: { active: number; onSelect: (i:
           <span>{treatments[tip.i].title}</span>
         </div>
       )}
-      <p className="body-hint">Tap the body or a point to explore</p>
+      <p className="body-hint"><span className="tap-dot" aria-hidden="true" /> Tap a label or the body to see it move</p>
     </div>
   );
 }

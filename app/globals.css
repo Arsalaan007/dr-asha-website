@@ -224,7 +224,8 @@ em { font-style: italic; color: var(--teal); }
 .spine rect { fill: #d6e5eb; transition: fill .4s; }
 .brain { opacity: 0; }
 .ear-rings circle { fill: none; stroke: #3fb2d4; stroke-width: 1.2; opacity: 0; transform-box: fill-box; transform-origin: center; }
-[data-hit] { cursor: pointer; }
+[data-hit] { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.body { touch-action: manipulation; -webkit-user-select: none; user-select: none; }
 [data-hit]:hover .cap-o, [data-hit]:hover.part-torso .torso, [data-hit]:hover > .neck, [data-hit]:hover > .head { stroke: #7fc6dd; }
 
 /* highlight the active body part */
@@ -285,6 +286,21 @@ em { font-style: italic; color: var(--teal); }
 .spot.is-on .spot-dot { fill: #fff; transform: scale(1.2); }
 .spot.is-on .spot-glow { opacity: 1; animation-duration: 1.6s; }
 @keyframes pulse { 0% { transform: scale(.5); opacity: .9; } 100% { transform: scale(1.6); opacity: 0; } }
+
+/* on-figure labels */
+.label { cursor: pointer; }
+.label rect { fill: #fff; stroke: #9fc4d3; stroke-width: 1; filter: drop-shadow(0 2px 4px rgba(11,42,60,.12)); transition: fill .3s, stroke .3s; }
+.label text { font-family: var(--sans); font-size: 10.5px; font-weight: 650; fill: var(--navy); transition: fill .3s; pointer-events: none; }
+.leader { fill: none; stroke: #9fc4d3; stroke-width: .9; stroke-dasharray: 2.5 2.5; pointer-events: none; transition: stroke .3s; }
+.label:hover rect { stroke: var(--teal); }
+.label.is-on rect { fill: var(--teal); stroke: var(--teal); }
+.label.is-on text { fill: #fff; }
+.label.is-on .leader { stroke: var(--teal); stroke-dasharray: none; stroke-width: 1.2; }
+.label:not(.is-on) rect { animation: labelNudge 3.2s ease-in-out infinite; }
+@keyframes labelNudge { 0%, 85%, 100% { stroke: #9fc4d3; } 92% { stroke: var(--teal); } }
+.tap-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--teal); margin-right: .4rem; vertical-align: middle; box-shadow: 0 0 0 0 rgba(15,111,140,.5); animation: tapPing 1.6s ease-out infinite; }
+@keyframes tapPing { to { box-shadow: 0 0 0 8px rgba(15,111,140,0); } }
+.body-hint { font-weight: 600; color: var(--teal-dark) !important; }
 
 /* cursor label */
 .body-tip { position: absolute; z-index: 3; pointer-events: none; transform: translate(14px, -50%); background: var(--navy); color: #fff; border-radius: 10px; padding: .45rem .7rem; box-shadow: 0 10px 24px -10px rgba(11,42,60,.5); white-space: nowrap; animation: tipIn .18s ease-out; }
