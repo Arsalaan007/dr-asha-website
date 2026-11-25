@@ -16,19 +16,22 @@ export function Header() {
     let last = window.scrollY;
     let ticking = false;
     const darkEls = [...document.querySelectorAll<HTMLElement>("[data-nav='dark']")];
+    let hiddenNow = false;
+    let darkNow = false;
     const update = () => {
       ticking = false;
       const y = window.scrollY;
       // hide when scrolling down past the hero, show again when scrolling up
-      setHidden((h) => (y > 480 && y > last + 4 ? true : y < last - 4 ? false : h));
+      const h = y > 480 && y > last + 4 ? true : y < last - 4 ? false : hiddenNow;
       last = y;
-      // which section sits under the header bar?
+      if (h !== hiddenNow) setHidden((hiddenNow = h));
+      // which section sits under the header bar? (only re-render when it changes)
       const probe = 36;
       const dark = darkEls.some((el) => {
         const r = el.getBoundingClientRect();
         return r.top <= probe && r.bottom >= probe;
       });
-      setOnDark(dark);
+      if (dark !== darkNow) setOnDark((darkNow = dark));
     };
     const onScroll = () => {
       if (!ticking) {

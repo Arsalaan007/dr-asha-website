@@ -50,7 +50,7 @@ export function TreatmentsExplorer() {
         if (e.isIntersecting) player.current?.play();
         else player.current?.pause();
       },
-      { threshold: 0.05 }
+      { threshold: 0.2 }
     );
     io.observe(el);
     return () => io.disconnect();
@@ -76,6 +76,18 @@ export function TreatmentsExplorer() {
   }, [active]);
 
   useEffect(() => () => player.current?.destroy(), []);
+
+  // Pause the panel animation while the page scrolls (keeps scrolling smooth on phones)
+  useEffect(() => {
+    const pause = () => player.current?.pause();
+    const resume = () => inView.current && player.current?.play();
+    window.addEventListener("scrollstart", pause);
+    window.addEventListener("scrollend-idle", resume);
+    return () => {
+      window.removeEventListener("scrollstart", pause);
+      window.removeEventListener("scrollend-idle", resume);
+    };
+  }, []);
 
   const onKey = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowRight" || e.key === "ArrowDown") {
