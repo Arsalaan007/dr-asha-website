@@ -138,7 +138,7 @@ export default function Home() {
         </section>
 
         {/* CTA */}
-        <section className="cta-band">
+        <section className="cta-band" data-nav="dark">
           <div className="container cta-inner" data-reveal>
             <div>
               <h2>Ready to move without pain?</h2>
@@ -198,7 +198,7 @@ export default function Home() {
 
       </main>
 
-      <footer className="footer">
+      <footer className="footer" data-nav="dark">
         <div className="container footer-inner">
           <div className="brand brand-light">
             <Logo />

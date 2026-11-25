@@ -1,60 +1,135 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { nav, site } from "@/lib/site";
 import { Logo } from "./Logo";
 
+const tel = `tel:${site.phone.replace(/\s/g, "")}`;
+
 export function Header() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [onDark, setOnDark] = useState(false); // header is over a dark section → switch to light theme
+  const firstLink = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     let last = window.scrollY;
-    const onScroll = () => {
+    let ticking = false;
+    const update = () => {
+      ticking = false;
       const y = window.scrollY;
-      setScrolled(y > 8);
       // hide when scrolling down past the hero, show again when scrolling up
-      setHidden(y > 480 && y > last + 4 ? true : y < last - 4 ? false : (h) => h);
+      setHidden((h) => (y > 480 && y > last + 4 ? true : y < last - 4 ? false : h));
       last = y;
+      // which section sits under the header bar?
+      const probe = 36;
+      const dark = [...document.querySelectorAll<HTMLElement>("[data-nav='dark']")].some((el) => {
+        const r = el.getBoundingClientRect();
+        return r.top <= probe && r.bottom >= probe;
+      });
+      setOnDark(dark);
     };
-    onScroll();
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
-  return (
-    <header className={`header ${scrolled ? "is-scrolled" : ""} ${hidden && !open ? "is-hidden" : ""}`}>
-      <div className="container header-inner">
-        <a href="#top" className="brand" aria-label={site.name}>
-          <Logo />
-          <span>
-            <strong>Back Neck &amp; Joints</strong>
-            <small>{site.doctor}</small>
-          </span>
-        </a>
+  // Lock page scroll and support Esc while the mobile menu is open
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    const t = setTimeout(() => firstLink.current?.focus({ preventScroll: true }), 250);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+      clearTimeout(t);
+    };
+  }, [open]);
 
-        <nav className={`nav ${open ? "is-open" : ""}`} aria-label="Main">
-          {nav.map((item) => (
-            <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
+  const close = () => setOpen(false);
+  const theme = open ? "theme-dark" : onDark ? "theme-light" : "theme-dark";
+
+  return (
+    <>
+      <header className={`header ${theme} ${hidden && !open ? "is-hidden" : ""} ${open ? "menu-open" : ""}`}>
+        <div className="container header-inner">
+          <a href="#top" className="brand" aria-label={site.name} onClick={close}>
+            <Logo />
+            <span>
+              <strong>Back Neck &amp; Joints</strong>
+              <small>{site.doctor}</small>
+            </span>
+          </a>
+
+          <nav className="nav" aria-label="Main">
+            {nav.map((item) => (
+              <a key={item.href} href={item.href}>
+                {item.label}
+              </a>
+            ))}
+            <a href={tel} className="btn btn-primary nav-cta">
+              Call the clinic
+            </a>
+          </nav>
+
+          <button
+            className={`menu-btn ${open ? "is-open" : ""}`}
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span />
+            <span />
+          </button>
+        </div>
+      </header>
+
+      <div
+        id="mobile-menu"
+        className={`menu-pop ${open ? "is-open" : ""}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu"
+        aria-hidden={!open}
+        inert={!open}
+      >
+        <nav className="menu-links" aria-label="Mobile">
+          {nav.map((item, i) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={close}
+              ref={i === 0 ? firstLink : undefined}
+              style={{ "--i": i } as React.CSSProperties}
+            >
+              <span className="menu-num">{String(i + 1).padStart(2, "0")}</span>
               {item.label}
             </a>
           ))}
-          <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="btn btn-primary nav-cta" onClick={() => setOpen(false)}>
+        </nav>
+        <div className="menu-foot" style={{ "--i": nav.length } as React.CSSProperties}>
+          <a href={tel} className="btn btn-primary btn-block" onClick={close}>
             Call the clinic
           </a>
-        </nav>
-
-        <button
-          className={`menu-btn ${open ? "is-open" : ""}`}
-          aria-label="Toggle menu"
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span />
-          <span />
-        </button>
+          <p>
+            {site.locations.map((l) => l.area.replace(", Mumbai", "")).join(" · ")}
+          </p>
+        </div>
       </div>
-    </header>
+    </>
   );
 }
