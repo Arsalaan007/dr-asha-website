@@ -106,8 +106,19 @@ export default function Home() {
               <h2>{video.title}</h2>
               <p>{video.text}</p>
             </div>
-            <div data-reveal style={delay(120)}>
-              <VideoEmbed id={video.youtubeId} title={video.title} />
+            <div className="video-grid">
+              {video.items.map((v, i) => (
+                <figure key={v.youtubeId} className="video-card" data-reveal style={delay(120 + i * 120)}>
+                  <VideoEmbed id={v.youtubeId} title={v.title} />
+                  <figcaption>
+                    <span className="video-num">{String(i + 1).padStart(2, "0")}</span>
+                    <span>
+                      <strong>{v.title}</strong>
+                      <small>{v.source}</small>
+                    </span>
+                  </figcaption>
+                </figure>
+              ))}
             </div>
           </div>
         </section>

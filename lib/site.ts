@@ -29,11 +29,21 @@ export const site = {
 };
 
 export const video = {
-  youtubeId: "8IGHtevVuag",
-  // Edit the heading/description to match the video's content
   kicker: "Watch",
-  title: "Dr. Asha in conversation",
-  text: "Watch Dr. Asha Menon talk about her work and her approach to treating pain.",
+  title: "Dr. Asha on the McKenzie Method",
+  text: "Talks and guidance from Dr. Asha Menon on treating and self-managing back pain.",
+  items: [
+    {
+      youtubeId: "8IGHtevVuag",
+      title: "Role of the McKenzie Method in chronic low back pain",
+      source: "Physio TV · Ortho TV",
+    },
+    {
+      youtubeId: "fQCZhJSJV34",
+      title: "McKenzie Method to self-manage your back pain",
+      source: "Back Neck and Joints",
+    },
+  ],
 };
 
 export const nav = [
