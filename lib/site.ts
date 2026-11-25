@@ -5,7 +5,7 @@ export const site = {
   clinic: "Shrigiridhari Physiotherapy Center",
   doctor: "Dr. Asha Menon",
   doctorTitle: "Dr. Asha Menon (P.T.), Dip. MDT",
-  tagline: "India's only certified McKenzie Clinic",
+  tagline: "Certified McKenzie Clinic · Mira Road & Juhu",
   // TODO: replace with the clinic's real details before going live
   phone: "+91 00000 00000",
   email: "info@backneckandjoints.in",
