@@ -22,6 +22,7 @@ export function TreatmentsExplorer() {
   const anim = useRef<HTMLDivElement>(null);
   const player = useRef<AnimationItem | null>(null);
   const inView = useRef(false);
+  const [visible, setVisible] = useState(false);
 
   const select = useCallback((i: number) => {
     setAuto(false); // stop the tour once the visitor takes over
@@ -42,7 +43,15 @@ export function TreatmentsExplorer() {
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => (inView.current = e.isIntersecting), { threshold: 0.35 });
+    const io = new IntersectionObserver(
+      ([e]) => {
+        inView.current = e.isIntersecting;
+        setVisible(e.isIntersecting);
+        if (e.isIntersecting) player.current?.play();
+        else player.current?.pause();
+      },
+      { threshold: 0.05 }
+    );
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -50,14 +59,14 @@ export function TreatmentsExplorer() {
   // Swap the large animation when the condition changes
   useEffect(() => {
     let cancelled = false;
-    import("lottie-web").then(({ default: lottie }) => {
+    import("lottie-web/build/player/lottie_light").then(({ default: lottie }) => {
       if (cancelled || !anim.current) return;
       player.current?.destroy();
       player.current = lottie.loadAnimation({
         container: anim.current,
         renderer: "svg",
         loop: true,
-        autoplay: !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+        autoplay: inView.current && !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
         animationData: structuredClone(animations[treatments[active].anim]),
       });
     });
@@ -81,7 +90,7 @@ export function TreatmentsExplorer() {
   const t = treatments[active];
 
   return (
-    <div className="explorer" ref={root}>
+    <div className={`explorer ${visible ? "" : "is-paused"}`} ref={root}>
       <BodyFigure active={active} onSelect={select} />
 
       <div className="explorer-panel" aria-live="polite">

@@ -15,6 +15,7 @@ export function Header() {
   useEffect(() => {
     let last = window.scrollY;
     let ticking = false;
+    const darkEls = [...document.querySelectorAll<HTMLElement>("[data-nav='dark']")];
     const update = () => {
       ticking = false;
       const y = window.scrollY;
@@ -23,7 +24,7 @@ export function Header() {
       last = y;
       // which section sits under the header bar?
       const probe = 36;
-      const dark = [...document.querySelectorAll<HTMLElement>("[data-nav='dark']")].some((el) => {
+      const dark = darkEls.some((el) => {
         const r = el.getBoundingClientRect();
         return r.top <= probe && r.bottom >= probe;
       });
