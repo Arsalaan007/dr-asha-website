@@ -13,10 +13,10 @@ export const site = {
   locations: [
     {
       name: "Shrigiridhari Physiotherapy Center",
-      area: "Mira Road, Mumbai",
+      area: "Mira Road East, Mumbai",
       address: "B6-001, Sector 4, Shanti Nagar",
       timings: "Mon – Sat · Timings to be added",
-      mapQuery: "Shrigiridhari Physiotherapy Center, Mira Road, Mumbai",
+      mapQuery: "Shri Giridhari Physiotherapy Dr Asha Menon, Sector 4, Shanti Nagar, Mira Road East, Mumbai, Maharashtra",
     },
     {
       name: "Bhartiya Arogya Nidhi Hospital",
