@@ -79,19 +79,19 @@ export const treatments = [
     tags: ["Stiff neck", "Cervical pain", "Neck-related headaches", "Arm symptoms"],
   },
   {
-    id: "joints", anim: "joint" as const, area: "Shoulder", spot: { x: 60, y: 108 },
+    id: "joints", anim: "shoulder" as const, area: "Shoulder", spot: { x: 60, y: 108 },
     title: "Joints & extremities",
     text: "Problems of the muscles and joints of the shoulder, elbow, hip, knee and ankle.",
     tags: ["Shoulder", "Elbow", "Hip", "Knee", "Ankle"],
   },
   {
-    id: "surgery", anim: "ecg" as const, area: "Knee", spot: { x: 78, y: 318 },
+    id: "surgery", anim: "knee" as const, area: "Knee", spot: { x: 78, y: 318 },
     title: "Post-surgical rehabilitation",
     text: "Stabilisation and structured recovery programmes after orthopaedic surgery.",
     tags: ["After joint surgery", "After spine surgery", "Strength & stability"],
   },
   {
-    id: "stroke", anim: "neuron" as const, area: "Brain", spot: { x: 100, y: 31 },
+    id: "stroke", anim: "brain" as const, area: "Brain", spot: { x: 100, y: 31 },
     title: "Stroke rehabilitation",
     text: "Neuro-developmental techniques to help rebuild movement, balance and everyday function.",
     tags: ["Movement", "Balance", "Everyday function"],

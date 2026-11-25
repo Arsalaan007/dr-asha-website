@@ -171,8 +171,61 @@ def vestibular():
     return doc("vestibular", g, op=180)
 
 
+def knee():
+    """Thigh fixed, shin bends at the knee; pulse at the joint; small + for post-surgical."""
+    g = [group([path([(34, 14), (50, 50)]), stroke(TEAL, 6)])]
+    g.append(group([group([path([(50, 50), (50, 84), (62, 86)]), stroke(TEAL, 6)])],
+                   tr(p=(50, 50), a=(50, 50), r=anim([(0, 0), (50, -50), (70, -50), (120, 0)]))))
+    g.append(group([ell(14), stroke(SOFT, 3)],
+                   tr(p=(50, 50), s=anim([(0, [100, 100]), (60, [200, 200]), (120, [100, 100])]),
+                      o=anim([(0, 100), (60, 0), (120, 100)]))))
+    g.append(group([ell(13), fill()], tr(p=(50, 50), s=anim([(0, [100, 100]), (55, [118, 118]), (120, [100, 100])]))))
+    g.append(group([path([(0, -6), (0, 6)]), path([(-6, 0), (6, 0)]), stroke(TEAL, 3.5)],
+                   tr(p=(80, 20), s=anim([(0, [100, 100]), (30, [125, 125]), (60, [100, 100]), (120, [100, 100])]))))
+    return doc("knee", g)
+
+
+def shoulder():
+    """Upper body; one arm lifts sideways at the shoulder, with a pulse on the joint."""
+    g = []
+    # torso + head
+    g.append(group([rect(26, 44, 9), stroke(TEAL, 3.5)], tr(p=(50, 68))))
+    g.append(group([ell(18), stroke(TEAL, 3.5)], tr(p=(50, 30))))
+    # resting arm (right side)
+    g.append(group([path([(63, 52), (68, 82)]), stroke(SOFT, 5)]))
+    # lifting arm, pivot at the left shoulder
+    g.append(group([group([path([(37, 52), (32, 82)]), stroke(TEAL, 5)])],
+                   tr(p=(37, 52), a=(37, 52), r=anim([(0, 0), (50, 95), (70, 95), (120, 0)]))))
+    g.append(group([ell(12), stroke(SOFT, 3)],
+                   tr(p=(37, 52), s=anim([(0, [100, 100]), (60, [210, 210]), (120, [100, 100])]),
+                      o=anim([(0, 100), (60, 0), (120, 100)]))))
+    g.append(group([ell(9), fill()], tr(p=(37, 52))))
+    return doc("shoulder", g)
+
+
+def brain():
+    """Head outline with a small neural network inside; signals travel outward."""
+    g = [group([ell(64), stroke(SOFT, 3.5)], tr(p=(50, 44))),
+         group([path([(42, 76), (42, 92)]), path([(58, 76), (58, 92)]), stroke(SOFT, 3.5)])]
+    cx, cy, R = 50, 42, 18
+    ends = []
+    for k in range(6):
+        ang = math.radians(-90 + k * 60)
+        ex, ey = cx + R * math.cos(ang), cy + R * math.sin(ang)
+        ends.append((ex, ey))
+        g.append(group([path([(cx, cy), (ex, ey)]), stroke(SOFT, 2.5)]))
+        g.append(group([ell(6, (ex, ey)), stroke(TEAL, 2.5)]))
+    for k, (ex, ey) in enumerate(ends):
+        s0 = k * 12
+        g.append(group([ell(4.5), fill()], tr(
+            p=anim([(0, [cx, cy]), (s0, [cx, cy]), (s0 + 45, [ex, ey]), (120, [ex, ey])]),
+            o=anim([(0, 0), (s0, 0), (s0 + 8, 100), (s0 + 38, 100), (s0 + 45, 0), (120, 0)]))))
+    g.append(group([ell(12), fill()], tr(p=(cx, cy), s=anim([(0, [100, 100]), (60, [122, 122]), (120, [100, 100])]))))
+    return doc("brain", g)
+
+
 os.makedirs(OUT, exist_ok=True)
-for fn in (spine, neck, joint, ecg, neuron, vestibular):
+for fn in (spine, neck, shoulder, knee, brain, vestibular):
     d = fn()
     with open(os.path.join(OUT, d["nm"] + ".json"), "w") as f:
         json.dump(d, f, separators=(",", ":"))

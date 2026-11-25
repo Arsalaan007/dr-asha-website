@@ -6,12 +6,12 @@ import { treatments } from "@/lib/site";
 import { BodyFigure } from "./BodyFigure";
 import spine from "@/lib/lottie/spine.json";
 import neck from "@/lib/lottie/neck.json";
-import joint from "@/lib/lottie/joint.json";
-import ecg from "@/lib/lottie/ecg.json";
-import neuron from "@/lib/lottie/neuron.json";
+import shoulder from "@/lib/lottie/shoulder.json";
+import knee from "@/lib/lottie/knee.json";
+import brain from "@/lib/lottie/brain.json";
 import vestibular from "@/lib/lottie/vestibular.json";
 
-const animations = { spine, neck, joint, ecg, neuron, vestibular };
+const animations = { spine, neck, shoulder, knee, brain, vestibular };
 const CYCLE_MS = 5200;
 
 /** Interactive body map: hotspots on a figure select a condition; the panel shows its details. */
