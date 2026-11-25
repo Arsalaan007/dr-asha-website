@@ -32,8 +32,8 @@ export const video = {
   youtubeId: "8IGHtevVuag",
   // Edit the heading/description to match the video's content
   kicker: "Watch",
-  title: "A closer look at the McKenzie approach",
-  text: "See how Dr. Asha and the team help patients understand and manage their pain.",
+  title: "Dr. Asha in conversation",
+  text: "Watch Dr. Asha Menon talk about her work and her approach to treating pain.",
 };
 
 export const nav = [
