@@ -137,6 +137,17 @@ export default function Home() {
           </div>
         </section>
 
+        {/* CTA */}
+        <section className="cta-band">
+          <div className="container cta-inner" data-reveal>
+            <div>
+              <h2>Ready to move without pain?</h2>
+              <p>Start with a proper McKenzie assessment.</p>
+            </div>
+            <a href={tel} className="btn btn-light"><Phone /> Call the clinic</a>
+          </div>
+        </section>
+
         {/* CONTACT */}
         <section id="contact" className="section">
           <div className="container">
@@ -185,16 +196,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="cta-band">
-          <div className="container cta-inner" data-reveal>
-            <div>
-              <h2>Ready to move without pain?</h2>
-              <p>Start with a proper McKenzie assessment.</p>
-            </div>
-            <a href={tel} className="btn btn-light"><Phone /> Call the clinic</a>
-          </div>
-        </section>
       </main>
 
       <footer className="footer">

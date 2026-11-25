@@ -221,7 +221,7 @@ em { font-style: italic; color: var(--teal); }
 .explorer-tabs button.is-on { background: var(--navy); border-color: var(--navy); color: #fff; }
 
 /* CTA band */
-.cta-band { padding: 0 0 clamp(3.5rem, 7vw, 5rem); }
+.cta-band { padding: 0; }
 .cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem 2rem; flex-wrap: wrap; background: linear-gradient(130deg, var(--teal) 0%, var(--navy) 100%); color: #fff; border-radius: 28px; padding: clamp(1.8rem, 4vw, 3rem) clamp(1.5rem, 4vw, 3.2rem); position: relative; overflow: hidden; }
 .cta-inner::after { content: ""; position: absolute; right: -60px; top: -80px; width: 260px; height: 260px; border-radius: 50%; border: 1px solid rgba(255,255,255,.18); box-shadow: 0 0 0 40px rgba(255,255,255,.04), 0 0 0 80px rgba(255,255,255,.03); pointer-events: none; }
 .cta-inner h2 { color: #fff; margin-bottom: .3rem; font-size: clamp(1.7rem, 3.2vw, 2.4rem); }
