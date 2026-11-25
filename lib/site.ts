@@ -14,9 +14,8 @@ export const site = {
     {
       name: "Shrigiridhari Physiotherapy Center",
       area: "Mira Road, Mumbai",
-      address: "Full street address to be added",
+      address: "B6-001, Sector 4, Shanti Nagar",
       timings: "Mon – Sat · Timings to be added",
-      // TODO: replace with the exact street address once confirmed
       mapQuery: "Shrigiridhari Physiotherapy Center, Mira Road, Mumbai",
     },
     {
