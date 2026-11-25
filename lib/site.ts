@@ -91,13 +91,13 @@ export const treatments = [
     tags: ["After joint surgery", "After spine surgery", "Strength & stability"],
   },
   {
-    id: "stroke", anim: "neuron" as const, area: "Brain", spot: { x: 100, y: 30 },
+    id: "stroke", anim: "neuron" as const, area: "Brain", spot: { x: 100, y: 31 },
     title: "Stroke rehabilitation",
     text: "Neuro-developmental techniques to help rebuild movement, balance and everyday function.",
     tags: ["Movement", "Balance", "Everyday function"],
   },
   {
-    id: "vestibular", anim: "vestibular" as const, area: "Inner ear", spot: { x: 121, y: 44 },
+    id: "vestibular", anim: "vestibular" as const, area: "Inner ear", spot: { x: 118, y: 44 },
     title: "Vestibular rehabilitation",
     text: "Treatment for dizziness, vertigo and balance problems linked to the inner ear.",
     tags: ["Dizziness", "Vertigo", "Balance problems"],

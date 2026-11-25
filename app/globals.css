@@ -210,22 +210,89 @@ em { font-style: italic; color: var(--teal); }
 
 /* Treatments explorer */
 .explorer { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; background: rgba(255,255,255,.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid var(--line); border-radius: 28px; padding: clamp(1.4rem, 3.5vw, 3rem); box-shadow: 0 30px 70px -45px rgba(11,42,60,.45); }
-.body-wrap { position: relative; display: grid; justify-items: center; }
-.body-wrap::before { content: ""; position: absolute; width: 78%; aspect-ratio: 1; top: 12%; border-radius: 50%; background: radial-gradient(circle, var(--teal-soft), transparent 70%); z-index: -1; }
-.body { width: 100%; max-width: 300px; height: auto; overflow: visible; }
-.body-hint { font-size: .78rem; color: var(--muted); margin-top: .6rem; letter-spacing: .04em; }
+.body-wrap { position: relative; display: grid; justify-items: center; touch-action: manipulation; }
+.body-wrap::before { content: ""; position: absolute; width: 78%; aspect-ratio: 1; top: 10%; border-radius: 50%; background: radial-gradient(circle, var(--teal-soft), transparent 70%); z-index: -1; }
+.body { width: 100%; max-width: 420px; height: auto; overflow: visible; transition: transform .5s cubic-bezier(.2,.8,.2,1); will-change: transform; }
+.body * { transform-box: view-box; }
+.floor-shadow { fill: rgba(11,42,60,.08); }
+
+/* figure surfaces */
+.cap path { fill: none; stroke-linecap: round; transition: stroke .4s; }
+.cap-o { stroke: #bcd2dc; }
+.cap-f { stroke: #f4f8fa; }
+.cap-hand, .torso, .neck, .head { fill: #f4f8fa; stroke: #bcd2dc; stroke-width: 1.3; transition: fill .4s, stroke .4s; }
+.spine rect { fill: #d6e5eb; transition: fill .4s; }
+.brain { opacity: 0; }
+.ear-rings circle { fill: none; stroke: #3fb2d4; stroke-width: 1.2; opacity: 0; transform-box: fill-box; transform-origin: center; }
+[data-hit] { cursor: pointer; }
+[data-hit]:hover .cap-o, [data-hit]:hover.part-torso .torso, [data-hit]:hover > .neck, [data-hit]:hover > .head { stroke: #7fc6dd; }
+
+/* highlight the active body part */
+.mode-surgery .part-legR .cap-o, .mode-joints .part-armR .cap-o, .mode-stroke .part-armL .cap-o { stroke: var(--teal); }
+.mode-surgery .part-legR .cap-f, .mode-joints .part-armR .cap-f, .mode-stroke .part-armL .cap-f { stroke: #d2ebf3; }
+.mode-joints .cap-hand.part-armR, .mode-stroke .cap-hand.part-armL { fill: #d2ebf3; stroke: var(--teal); }
+.mode-back .torso { fill: #eaf4f8; stroke: var(--teal); }
+.mode-back .spine rect { fill: var(--teal); animation: vert 1.6s ease-in-out infinite; animation-delay: calc(var(--k) * 90ms); }
+.mode-neck .neck, .mode-neck .head, .mode-stroke .head, .mode-vestibular .head { fill: #d2ebf3; stroke: var(--teal); }
+.mode-stroke .brain { animation: brain 1.6s ease-in-out infinite; }
+.mode-vestibular .ear-rings circle { animation: ring 1.8s ease-out infinite; }
+.mode-vestibular .ear-rings circle:nth-child(2) { animation-delay: .6s; }
+.mode-vestibular .ear-rings circle:nth-child(3) { animation-delay: 1.2s; }
+
+/* joint pivots */
+.g-sway { transform-origin: 100px 408px; }
+.g-upper { transform-origin: 100px 232px; }
+.g-head { transform-origin: 100px 84px; }
+.g-armR { transform-origin: 62px 98px; }
+.g-foreR { transform-origin: 52px 158px; }
+.g-armL { transform-origin: 138px 98px; }
+.g-foreL { transform-origin: 148px 158px; }
+.g-legR { transform-origin: 84px 236px; }
+.g-shinR { transform-origin: 80px 320px; }
+.g-sway, .g-upper, .g-head, .g-armR, .g-foreR, .g-armL, .g-foreL, .g-legR, .g-shinR { transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+
+/* movements per condition */
+.mode-neck .g-head { animation: neckTilt 2.6s ease-in-out infinite; }
+.mode-back .g-upper { animation: sideBend 3s ease-in-out infinite; }
+.mode-joints .g-armR { animation: armRaise 2.8s cubic-bezier(.45,0,.25,1) infinite; }
+.mode-joints .g-foreR { animation: elbowSoft 2.8s cubic-bezier(.45,0,.25,1) infinite; }
+.mode-surgery .g-legR { animation: legLift 2.8s cubic-bezier(.45,0,.25,1) infinite; }
+.mode-surgery .g-shinR { animation: kneeBend 2.8s cubic-bezier(.45,0,.25,1) infinite; }
+.mode-stroke .g-foreL { animation: elbowFlex 2.4s cubic-bezier(.45,0,.25,1) infinite; }
+.mode-vestibular .g-sway { animation: sway 3.2s ease-in-out infinite; }
+.mode-vestibular .g-head { animation: headBalance 3.2s ease-in-out infinite; }
+@keyframes neckTilt { 0%, 100% { transform: rotate(-13deg); } 50% { transform: rotate(13deg); } }
+@keyframes sideBend { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+@keyframes armRaise { 0%, 100% { transform: rotate(0deg); } 45%, 60% { transform: rotate(88deg); } }
+@keyframes elbowSoft { 0%, 100% { transform: rotate(0deg); } 45%, 60% { transform: rotate(-15deg); } }
+@keyframes legLift { 0%, 100% { transform: rotate(0deg); } 45%, 60% { transform: rotate(16deg); } }
+@keyframes kneeBend { 0%, 100% { transform: rotate(0deg); } 45%, 60% { transform: rotate(-38deg); } }
+@keyframes elbowFlex { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-125deg); } }
+@keyframes sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+@keyframes headBalance { 0%, 100% { transform: rotate(6deg); } 50% { transform: rotate(-6deg); } }
+@keyframes vert { 0%, 100% { fill: var(--teal); } 40% { fill: #7fd8f0; } }
+@keyframes brain { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+@keyframes ring { 0% { transform: scale(.6); opacity: .9; } 100% { transform: scale(3.2); opacity: 0; } }
+
+/* hotspots */
 .spot { cursor: pointer; outline: none; }
-.spot-ring { fill: #fff; stroke: var(--teal); stroke-width: 1.6; }
 .spot > circle { transform-box: fill-box; transform-origin: center; }
-.spot-ring, .spot-dot { transition: transform .35s cubic-bezier(.2,.8,.2,1), fill .3s; }
-.spot-dot { fill: var(--teal); transition: fill .3s; }
-.spot-glow { opacity: .55; transform-box: fill-box; transform-origin: center; animation: pulse 2.4s ease-out infinite; }
-.spot:nth-of-type(2n) .spot-glow { animation-delay: -1.2s; }
-.spot:hover .spot-ring, .spot:focus-visible .spot-ring { stroke-width: 2.4; }
-.spot.is-on .spot-ring { fill: var(--teal); stroke: #fff; stroke-width: 2.4; transform: scale(1.4); filter: drop-shadow(0 3px 6px rgba(15,111,140,.45)); }
+.spot-glow { fill: url(#glow); opacity: .55; animation: pulse 2.4s ease-out infinite; }
+.spot-ring { fill: #fff; stroke: var(--teal); stroke-width: 1.6; transition: transform .35s cubic-bezier(.2,.8,.2,1), fill .3s; }
+.spot-dot { fill: var(--teal); transition: transform .35s cubic-bezier(.2,.8,.2,1), fill .3s; }
+.spot:hover .spot-ring, .spot:focus-visible .spot-ring { transform: scale(1.25); }
+.spot.is-on .spot-ring { fill: var(--teal); stroke: #fff; stroke-width: 2.2; transform: scale(1.4); filter: drop-shadow(0 3px 6px rgba(15,111,140,.45)); }
 .spot.is-on .spot-dot { fill: #fff; transform: scale(1.2); }
 .spot.is-on .spot-glow { opacity: 1; animation-duration: 1.6s; }
 @keyframes pulse { 0% { transform: scale(.5); opacity: .9; } 100% { transform: scale(1.6); opacity: 0; } }
+
+/* cursor label */
+.body-tip { position: absolute; z-index: 3; pointer-events: none; transform: translate(14px, -50%); background: var(--navy); color: #fff; border-radius: 10px; padding: .45rem .7rem; box-shadow: 0 10px 24px -10px rgba(11,42,60,.5); white-space: nowrap; animation: tipIn .18s ease-out; }
+.body-tip strong { display: block; font-size: .82rem; }
+.body-tip span { display: block; font-size: .72rem; color: #a9c3ce; }
+@keyframes tipIn { from { opacity: 0; transform: translate(8px, -50%); } }
+@media (hover: none) { .body-tip { display: none; } }
+.body-hint { font-size: .78rem; color: var(--muted); margin-top: .6rem; letter-spacing: .04em; }
 .explorer-panel { min-width: 0; }
 .panel-top { display: flex; align-items: center; gap: 1.2rem; margin-bottom: 1.4rem; }
 .panel-anim { flex: none; width: 112px; height: 112px; border-radius: 26px; padding: 10px; background: linear-gradient(150deg, #fff, var(--teal-soft)); border: 1px solid #d5e7ee; box-shadow: 0 14px 30px -18px rgba(15,111,140,.55); }
@@ -287,8 +354,8 @@ em { font-style: italic; color: var(--teal); }
   .hero-stats { border-left: 0; border-top: 1px solid #cfe0e8; padding: 1.6rem 0 0; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: .6rem; }
   .hero-stats li::before { display: none; }
   .explorer { grid-template-columns: 1fr; }
-  .body { max-width: 230px; }
-  .hero-grid { grid-template-columns: 1fr; }
+  .body { max-width: 340px; }
+    .hero-grid { grid-template-columns: 1fr; }
   .about-grid { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); align-items: start; }
   .locations { grid-template-columns: 1fr 1fr; }
 }
@@ -306,7 +373,7 @@ em { font-style: italic; color: var(--teal); }
 @media (max-width: 560px) {
   .hero-stats strong { font-size: 1.35rem; }
   .hero-stats span { font-size: .74rem; }
-  .body { max-width: 190px; }
+    .body { max-width: 270px; }
   .panel-anim { width: 84px; height: 84px; border-radius: 20px; }
   .explorer { border-radius: 22px; }
   .explorer-tabs { flex-wrap: nowrap; overflow-x: auto; margin-inline: -1.4rem; padding: 0 1.4rem .3rem; scrollbar-width: none; }
@@ -334,4 +401,4 @@ em { font-style: italic; color: var(--teal); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 .nowrap { white-space: nowrap; }
 
-@media (prefers-reduced-motion: reduce) { .spot-glow { animation: none !important; } .menu-pop, .menu-pop.is-open { clip-path: none; } }
+@media (prefers-reduced-motion: reduce) { 
