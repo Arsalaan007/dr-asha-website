@@ -32,3 +32,6 @@ export const Clock = (p: P) => (
 export const Shield = (p: P) => (
   <svg {...base} {...p}><path d="M12 3 4 6v6c0 5 3.4 8.4 8 9 4.6-.6 8-4 8-9V6z" /><path d="m9 12 2 2 4-4" /></svg>
 );
+export const Cap = (p: P) => (
+  <svg {...base} {...p}><path d="M2 9l10-5 10 5-10 5z" /><path d="M6 11v5c2 2 10 2 12 0v-5" /><path d="M22 9v5" /></svg>
+);

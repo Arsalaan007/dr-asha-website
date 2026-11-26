@@ -4,7 +4,8 @@ import { Reveal } from "./components/Reveal";
 import { TreatmentsExplorer } from "./components/TreatmentsExplorer";
 import { VideoEmbed } from "./components/VideoEmbed";
 import { Logo } from "./components/Logo";
-import { Arrow, Check, Clock, Mail, Phone, Pin, Shield } from "./components/Icons";
+import { Arrow, Cap, Check, Clock, Mail, Phone, Pin, Shield } from "./components/Icons";
+import { CountUp } from "./components/CountUp";
 import { credentials, mckenzie, nav, site, stats, video } from "@/lib/site";
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH;
@@ -49,11 +50,18 @@ export default function Home() {
               </ul>
             </div>
 
-            <ul className="hero-stats" data-reveal style={delay(200)}>
-              {stats.map((st) => (
-                <li key={st.label}>
-                  <strong>{st.value}</strong>
-                  <span>{st.label}</span>
+            <ul className="hero-stats">
+              {stats.map((st, i) => (
+                <li key={st.label} className="stat-card" data-reveal style={delay(200 + i * 140)}>
+                  <span className="stat-icon" aria-hidden="true">
+                    {st.icon === "clock" ? <Clock /> : st.icon === "cap" ? <Cap /> : <Shield />}
+                  </span>
+                  <span className="stat-text">
+                    <strong>
+                      {"count" in st ? <CountUp to={st.count} suffix={st.value} /> : st.value}
+                    </strong>
+                    <span>{st.label}</span>
+                  </span>
                 </li>
               ))}
             </ul>

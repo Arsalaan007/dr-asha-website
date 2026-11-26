@@ -75,10 +75,10 @@ export const nav = [
 ];
 
 export const stats = [
-  { value: "1990", label: "In private practice since" },
-  { value: "Dip. MDT", label: "Highest McKenzie qualification" },
-  { value: "NZ", label: "Accredited by McKenzie Institute International" },
-];
+  { icon: "clock", count: 35, value: "+ years", label: "In private practice since 1990" },
+  { icon: "cap", value: "Dip. MDT", label: "Highest McKenzie qualification" },
+  { icon: "shield", value: "Accredited", label: "McKenzie Institute International, New Zealand" },
+] as const;
 
 export const credentials = [
   "Dip. MDT — University of Otago & McKenzie Institute International, New Zealand",
