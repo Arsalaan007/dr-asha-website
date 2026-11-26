@@ -5,7 +5,7 @@ import { TreatmentsExplorer } from "./components/TreatmentsExplorer";
 import { VideoEmbed } from "./components/VideoEmbed";
 import { Logo } from "./components/Logo";
 import { Arrow, Check, Clock, Mail, Phone, Pin, Shield } from "./components/Icons";
-import { credentials, nav, site, stats, video } from "@/lib/site";
+import { credentials, mckenzie, nav, site, stats, video } from "@/lib/site";
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH;
 const tel = `tel:${site.phone.replace(/\s/g, "")}`;
@@ -98,11 +98,54 @@ export default function Home() {
           </div>
         </section>
 
+        {/* McKENZIE */}
+        <section id="mckenzie" className="section section-mck">
+          <div className="container">
+            <div className="mck-grid">
+              <figure className="mck-photo" data-reveal>
+                <Image
+                  src={`${base}/robin-mckenzie.jpg`}
+                  alt="Robin A. McKenzie, founder of the McKenzie Method"
+                  width={348}
+                  height={465}
+                  sizes="(max-width: 760px) 70vw, 320px"
+                />
+                <figcaption>
+                  <strong>Robin A. McKenzie</strong>
+                  <span>Founder of the McKenzie Method</span>
+                </figcaption>
+                <span className="mck-year">
+                  <strong>1950s</strong>
+                  <span>Method developed</span>
+                </span>
+              </figure>
+              <div className="mck-copy" data-reveal style={delay(120)}>
+                <Kicker n="02">The McKenzie Method</Kicker>
+                <h2>The man behind the method</h2>
+                <p className="lead-sm">{mckenzie.intro}</p>
+                <p>{mckenzie.intro2}</p>
+                <a href={mckenzie.readMore} target="_blank" rel="noopener noreferrer" className="text-link">
+                  Read more about the McKenzie Method <Arrow />
+                </a>
+              </div>
+            </div>
+            <ul className="mck-points">
+              {mckenzie.points.map((pt, i) => (
+                <li key={pt.title} className="card" data-reveal style={delay(i * 100)}>
+                  <span className="mck-num">{String(i + 1).padStart(2, "0")}</span>
+                  <h3>{pt.title}</h3>
+                  <p>{pt.text}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
         {/* VIDEO */}
         <section id="video" className="section section-video">
           <div className="container video-wrap">
             <div className="section-head center" data-reveal>
-              <Kicker n="02">{video.kicker}</Kicker>
+              <Kicker n="03">{video.kicker}</Kicker>
               <h2>{video.title}</h2>
               <p>{video.text}</p>
             </div>
@@ -127,7 +170,7 @@ export default function Home() {
         <section id="treatments" className="section section-tint">
           <div className="container">
             <div className="section-head" data-reveal>
-              <Kicker n="03">What we treat</Kicker>
+              <Kicker n="04">What we treat</Kicker>
               <h2>Conditions &amp; rehabilitation</h2>
               <p>Non-surgical care for the spine and joints, plus specialised rehabilitation. Explore by area of the body.</p>
             </div>
@@ -153,7 +196,7 @@ export default function Home() {
           <div className="container">
             <div className="contact-head" data-reveal>
               <div>
-                <Kicker n="04">Contact</Kicker>
+                <Kicker n="05">Contact</Kicker>
                 <h2>Visit the clinic</h2>
                 <p>Call or email to speak with the clinic.</p>
               </div>

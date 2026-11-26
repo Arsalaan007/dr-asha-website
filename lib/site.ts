@@ -28,6 +28,28 @@ export const site = {
   ],
 };
 
+export const mckenzie = {
+  readMore: "https://www.backneckandjoints.in/the-mckenzie-method",
+  intro:
+    "Robin Anthony McKenzie changed the way patients worldwide treat back and extremity problems. The McKenzie Method of Mechanical Diagnosis and Therapy, which he developed in the 1950s, has become a standard in the field.",
+  intro2:
+    "He devoted his professional life to the study of musculoskeletal disorders and their treatment, and his ideas are now supported by scientific evidence.",
+  points: [
+    {
+      title: "Assessment, not machines",
+      text: "A structured assessment built on the clinician's reasoning rather than hi-tech machines. Expensive tests are rarely needed.",
+    },
+    {
+      title: "You take an active part",
+      text: "Education and active involvement in your own care, so you can manage back, neck and joint problems if they return.",
+    },
+    {
+      title: "Safe and well researched",
+      text: "One of the most researched physical-therapy approaches. If you don't respond mechanically, you're referred for further evaluation.",
+    },
+  ],
+};
+
 export const video = {
   kicker: "Watch",
   title: "Dr. Asha on the McKenzie Method",
