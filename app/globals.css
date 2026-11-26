@@ -421,11 +421,10 @@ html.is-scrolling .explorer *, html.is-scrolling .explorer *::before, html.is-sc
   .hero-stats strong { font-size: 1.35rem; }
   .hero-stats span { font-size: .74rem; }
     .body { max-width: 270px; }
+  .explorer-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+  .explorer-tabs button { white-space: normal; line-height: 1.25; padding: .65rem .7rem; font-size: .8rem; min-height: 48px; border-radius: 14px; }
   .panel-anim { width: 84px; height: 84px; border-radius: 20px; }
   .explorer { border-radius: 22px; }
-  .explorer-tabs { flex-wrap: nowrap; overflow-x: auto; margin-inline: -1.4rem; padding: 0 1.4rem .3rem; scrollbar-width: none; }
-  .explorer-tabs::-webkit-scrollbar { display: none; }
-  .explorer-tabs button { flex: none; }
   .cta-inner .btn { width: 100%; }
   .container { width: calc(100% - 2.5rem); }
   .header-inner { height: 64px; }
