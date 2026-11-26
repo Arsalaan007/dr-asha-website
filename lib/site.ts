@@ -29,7 +29,7 @@ export const site = {
 };
 
 export const mckenzie = {
-  readMore: "https://www.backneckandjoints.in/the-mckenzie-method",
+  readMore: "https://www.mckenzieinstitute.org/about-us/about-robin-mckenzie",
   intro:
     "Robin Anthony McKenzie changed the way patients worldwide treat back and extremity problems. The McKenzie Method of Mechanical Diagnosis and Therapy, which he developed in the 1950s, has become a standard in the field.",
   intro2:

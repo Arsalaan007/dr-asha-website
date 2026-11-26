@@ -125,7 +125,7 @@ export default function Home() {
                 <p className="lead-sm">{mckenzie.intro}</p>
                 <p>{mckenzie.intro2}</p>
                 <a href={mckenzie.readMore} target="_blank" rel="noopener noreferrer" className="text-link">
-                  Read more about the McKenzie Method <Arrow />
+                  Read more about Robin McKenzie <Arrow />
                 </a>
               </div>
             </div>
