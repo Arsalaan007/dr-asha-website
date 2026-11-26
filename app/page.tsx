@@ -64,13 +64,15 @@ export default function Home() {
         <section id="about" className="section">
           <div className="container about-grid">
             <figure className="about-photo" data-reveal>
-              <Image
-                src={`${base}/dr-asha.jpg`}
-                alt="Dr. Asha Menon, McKenzie physiotherapist"
-                width={960}
-                height={1200}
-                sizes="(max-width: 1000px) 90vw, 460px"
-              />
+              <div className="photo-ring">
+                <Image
+                  src={`${base}/dr-asha.jpg`}
+                  alt="Dr. Asha Menon, McKenzie physiotherapist"
+                  width={960}
+                  height={1200}
+                  sizes="(max-width: 1000px) 90vw, 460px"
+                />
+              </div>
               <figcaption className="photo-badge">
                 <strong>Since 1990</strong>
                 <span>in private practice</span>
