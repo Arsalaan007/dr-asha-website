@@ -131,7 +131,6 @@ em { font-style: italic; color: var(--teal); }
 .photo-ring { position: relative; padding: 5px; border-radius: 27px; overflow: hidden; isolation: isolate; box-shadow: 0 30px 60px -30px rgba(11,42,60,.45); background: #0f6f8c; }
 .photo-ring::before { content: ""; position: absolute; left: 50%; top: 50%; width: 160%; aspect-ratio: 1; margin: -80% 0 0 -80%; background: conic-gradient(#0f6f8c, #7fc6dd, #0b2a3c, #3fb2d4, #0f6f8c); z-index: -1; will-change: transform; animation: ringSpin 6s linear infinite; }
 @keyframes ringSpin { to { transform: rotate(360deg); } }
-.about-photo::before { content: ""; position: absolute; inset: 18px -18px -18px 18px; border-radius: 24px; border: 1.5px solid #cfe0e8; z-index: -1; }
 .photo-badge { position: absolute; left: -14px; bottom: 28px; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: .8rem 1.1rem; box-shadow: var(--shadow); }
 .photo-badge strong { display: block; font-family: var(--serif); font-weight: 400; font-size: 1.35rem; color: var(--navy); line-height: 1.1; }
 .photo-badge span { font-size: .78rem; color: var(--muted); }
@@ -436,7 +435,6 @@ html.is-scrolling .explorer *, html.is-scrolling .explorer *::before, html.is-sc
   .menu-pop.is-open { clip-path: circle(150% at calc(100% - 42px) 32px); }
   .brand small { display: none; }
   .hero-actions .btn { flex: 1 1 100%; }
-  .about-photo::before { inset: 12px -10px -12px 10px; }
   .photo-badge { left: 10px; bottom: 14px; padding: .6rem .9rem; }
   .cred-card { padding: 1.3rem; }
   .location-body { padding: 1.1rem 1.2rem 1.3rem; }
